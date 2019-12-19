@@ -42,7 +42,7 @@ body {
 .error {
   margin: 0;
   position: absolute;
-  color: fushia;
+  color: red;
 }
 
 input,
