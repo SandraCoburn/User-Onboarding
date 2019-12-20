@@ -54,6 +54,15 @@ function UserForm({ values, errors, touched, status }) {
         </label>
         <button type="submit">Submit</button>
       </Form>
+      {users.map(user => {
+        return (
+          <ul key={user.id}>
+            <li>{user.name}</li>
+            <li>{user.email}</li>
+            <li>{user.password}</li>
+          </ul>
+        );
+      })}
     </div>
   );
 }
