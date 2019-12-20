@@ -5,7 +5,7 @@ import axios from "axios";
 
 function UserForm({ values, errors, touched, status }) {
   console.log("values are", values);
-
+  //Checking for changes on state
   const [users, setUsers] = useState([]);
   useEffect(() => {
     console.log("status has changed!", status);
@@ -15,6 +15,7 @@ function UserForm({ values, errors, touched, status }) {
   return (
     <div className="user-form">
       <Form>
+        <h1>User Onboarding</h1>
         <label htmlFor="name">
           Name:
           <Field id="name" type="text" name="name" placeholder="Name" />
@@ -50,6 +51,9 @@ function UserForm({ values, errors, touched, status }) {
             name="termsOfService"
             checked={values.termsOfService}
           />
+          {touched.termsOfService && errors.termsOfService && (
+            <p className="errors">{errors.termsOfService}</p>
+          )}
           <span className="checkmark" />
         </label>
         <button type="submit">Submit</button>
@@ -57,9 +61,9 @@ function UserForm({ values, errors, touched, status }) {
       {users.map(user => {
         return (
           <ul key={user.id}>
-            <li>{user.name}</li>
-            <li>{user.email}</li>
-            <li>{user.password}</li>
+            <li>Name: {user.name}</li>
+            <li>Email: {user.email}</li>
+            <li>Password: {user.password}</li>
           </ul>
         );
       })}
@@ -78,7 +82,8 @@ const FormikUserForm = withFormik({
   validationSchema: Yup.object().shape({
     name: Yup.string().required(),
     email: Yup.string().required(),
-    password: Yup.string().required()
+    password: Yup.string().required(),
+    termsOfService: Yup.boolean().oneOf([true], "Must aprove to submit")
   }),
   handleSubmit(values, { setStatus, resetForm }) {
     console.log("submitting", values);
