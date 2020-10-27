@@ -26,7 +26,7 @@ function UserForm({ values, errors, touched, status }) {
 
         <label htmlFor="email">
           Email:
-          <Field id="email" type="text" name="email" placeholder="Email" />
+          <Field id="email" type="email" name="email" placeholder="Email" />
           {touched.email && errors.email && (
             <p className="errors">{errors.email}</p>
           )}
@@ -35,7 +35,7 @@ function UserForm({ values, errors, touched, status }) {
           Password:
           <Field
             id="password"
-            type="text"
+            type="password"
             name="password"
             placeholder="Password"
           />
@@ -81,8 +81,12 @@ const FormikUserForm = withFormik({
   },
   validationSchema: Yup.object().shape({
     name: Yup.string().required(),
-    email: Yup.string().required(),
-    password: Yup.string().required(),
+    email: Yup.string()
+      .email()
+      .required(),
+    password: Yup.string()
+      .min(4, "Password must be 4 characters or longer")
+      .required(),
     termsOfService: Yup.boolean().oneOf([true], "Must aprove to submit")
   }),
   handleSubmit(values, { setStatus, resetForm }) {
